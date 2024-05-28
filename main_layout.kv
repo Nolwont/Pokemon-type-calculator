@@ -1,0 +1,106 @@
+#:import hex kivy.utils.get_color_from_hex
+
+
+#:set color_label hex('#ffe3aa')
+#:set color_button_normal hex('#bdffaa')
+
+
+<Label>
+	color: (0, 0, 0, 1)
+    markup: True
+	font_size: root.height/40 + root.width/80 + dp(10)
+	text_size: self.size 
+	halign: 'left'
+    valign: 'middle'
+	background_normal: ''
+	bcolor: color_label
+	canvas.before:
+		Color:
+			rgba: (0,0,0,0)  if self.bcolor is None else self.bcolor
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+<Button>
+	font_size: root.height/50 + root.width/50 + dp(20)
+	background_normal: ''
+	background_down: ''
+	bcolornormal: color_button_normal
+	background_color: (0,0,0,0) if self.bcolornormal is None else self.bcolornormal
+
+<MainLayout>
+
+	toggleModernButton:toggleModernButton
+	toggleAlteredButton:toggleAlteredButton
+	spinnerPrimaryType:spinnerPrimaryType
+	spinnerSecondaryType:spinnerSecondaryType
+	labelTimes4Weak:labelTimes4Weak
+	labelTimes2Weak:labelTimes2Weak
+	labelNeutral:labelNeutral
+	labelTimes2Resist:labelTimes2Resist
+	labelTimes4Resist:labelTimes4Resist
+	labelImmune:labelImmune
+
+	BoxLayout:
+		orientation: 'vertical'
+		size: root.width, root.height
+		spacing: 2
+
+		Label:
+			id:labelTimes4Weak
+			background_color: color_label
+
+		Label:
+			id:labelTimes2Weak
+
+		Label:
+			id:labelNeutral
+
+		Label:
+			id:labelTimes2Resist
+
+		Label:
+			id:labelTimes4Resist
+
+		Label:
+			id:labelImmune
+
+		BoxLayout:
+			orientation: 'horizontal'
+			spacing: 2
+
+			Spinner:
+				id: spinnerPrimaryType
+				text: 'Primary Type'
+				values: 
+				on_text: root.chooseType()
+
+			Spinner:
+				id: spinnerSecondaryType
+				text: 'Secondary Type'
+				values: 
+				on_text: root.chooseType()
+
+		BoxLayout:
+			orientation: 'horizontal'
+			spacing: 2
+
+			ToggleButton:
+				id:toggleModernButton
+				text: 'Modern'
+				group: 'toggleVersionButtons'
+				state:'normal'
+				on_press: 
+					root.toggleVersion()
+					root.changeButtonColour()
+
+
+
+			ToggleButton:
+				id:toggleAlteredButton
+				text: 'Altered'
+				group: 'toggleVersionButtons'
+				state: 'normal'
+				on_press: 
+					root.toggleVersion()
+					root.changeButtonColour()
